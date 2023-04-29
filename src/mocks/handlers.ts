@@ -1,25 +1,23 @@
-import { rest } from "msw";
+// mocks/handlers.js
 
-function getPosts() {
-	return rest.get(`/api/tunes`, (req, res, ctx) => {
+import { rest } from "msw";
+import users from "data/users"; // contains mock data for users
+import messages from "data/messages"; // contains mock data for messages
+
+export const handlers = [
+	rest.get(`/api/tunes`, async (req, res, ctx) => {
 		return res(
 			ctx.status(200),
 			ctx.json([
 				{
 					length: 1,
-					id: 1,
-					title: "Post 1 title",
-					body: "Post 1 body",
+					title: "Eyes to the wind",
 				},
 				{
 					length: 1,
-					id: 2,
-					title: "Post 2 title",
-					body: "Post 2 body",
+					title: "Take it easy.",
 				},
 			])
 		);
-	});
-}
-
-export const handlers = [getPosts()];
+	}),
+];

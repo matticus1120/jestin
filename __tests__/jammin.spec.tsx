@@ -1,17 +1,20 @@
 import Jammin from "../pages/jammin";
 import { render, screen } from "@testing-library/react";
 import "@testing-library/jest-dom";
+import "whatwg-fetch";
 
-import server from "../src/mocks/server";
+import "@testing-library/jest-dom";
+import { mswServer } from "../src/mocks/server";
 
-beforeAll(() => server.listen());
-afterEach(() => server.resetHandlers());
-afterAll(() => server.close());
+beforeAll(() => mswServer.listen());
+afterEach(() => mswServer.resetHandlers());
+afterAll(() => mswServer.close());
 
 describe("Matt", () => {
-	// it should render something
-	it("should render a thing", () => {
+	it("should render a thing", async () => {
 		render(<Jammin />);
+		await screen.findByText("All the tunes are");
+		expect(screen.getByText("Eyes to the wind: 1")).toBeInTheDocument();
 		screen.debug();
 	});
 });

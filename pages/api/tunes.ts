@@ -1,12 +1,20 @@
 const handler = async (req, res): Promise<void> => {
 	const results = [
 		{
-			title: "adsfads",
+			title: "Eyes to the wind",
 			length: 23,
 		},
 		{
-			title: "asdf23r23r23r",
+			title: "Take it easy.",
 			length: 23,
+		},
+		{
+			title: "All Around the World",
+			length: 4.3,
+		},
+		{
+			title: "Brian Wilson",
+			length: 4.3,
 		},
 	];
 
