@@ -14,9 +14,13 @@ const useFetchTunes = () => {
 
 	const trigger = useCallback(() => {
 		const fetchData = async () => {
-			const response = await fetch(`/api/tunes`);
-			const responseData = await response.json();
-			setData(responseData);
+			try {
+				const response = await fetch(`/api/tunes`);
+				const responseData = await response.json();
+				setData(responseData);
+			} catch {
+				throw new Error("Could not useFetchTunes");
+			}
 		};
 		fetchData();
 	}, []);
@@ -29,9 +33,14 @@ const useFetchTune = () => {
 
 	const trigger = useCallback((id) => {
 		const fetchData = async () => {
-			const response = await fetch(`/api/tunes/${id}`);
-			const responseData = await response.json();
-			setData(responseData);
+			try {
+				const response = await fetch(`/api/tunes/${id}`);
+				const responseData = await response.json();
+				setData(responseData);
+			} catch (error) {
+				console.log("error", error);
+				throw new Error("Could not useFetchTune");
+			}
 		};
 
 		fetchData();
@@ -40,7 +49,7 @@ const useFetchTune = () => {
 	return { data, trigger };
 };
 
-function Matt() {
+function AllTheTunes() {
 	const { data: tunes, trigger: triggerGetTunes } = useFetchTunes();
 	const { data: tune, trigger: triggerGetTune } = useFetchTune();
 	const router = useRouter();
@@ -163,7 +172,7 @@ function Matt() {
 export default function Index() {
 	return (
 		<ChakraProvider>
-			<Matt />
+			<AllTheTunes />
 		</ChakraProvider>
 	);
 }

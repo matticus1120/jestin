@@ -1,10 +1,12 @@
 import { fireEvent, render, screen } from "@testing-library/react";
+import { rest } from "msw";
 import { useRouter } from "next/router";
 import Jammin from "../pages/jammin";
 import "@testing-library/jest-dom";
 import "whatwg-fetch";
-
 import { mswServer } from "../src/mocks/server";
+
+import { tunes } from "../src/mocks/handlers";
 
 beforeAll(() => mswServer.listen());
 afterEach(() => mswServer.resetHandlers());
@@ -23,7 +25,9 @@ describe("Matt", () => {
 	it("should render a the list", async () => {
 		render(<Jammin />);
 		await screen.findByText("All the tunes are");
-		expect(screen.getByText("Take it easy.: 2.32")).toBeInTheDocument();
+		expect(
+			screen.getByText("Going to California: 2.32")
+		).toBeInTheDocument();
 	});
 
 	it("should show details on click", async () => {
@@ -50,27 +54,21 @@ describe("Matt", () => {
 			isReady: true,
 			push: () => jest.fn(),
 			query: {
-				"tune-id": 1,
+				"tune-id": "3",
 			},
 		});
 
 		render(<Jammin />);
-		await screen.findByText("All the tunes are");
-		// expect(screen.getByText("Eyes to the wind: 5.11")).toBeInTheDocument();
-		// const buttons = screen.getAllByRole("button", {
-		// 	name: "Get Info",
-		// });
-		// fireEvent.click(buttons[0]);
+
 		await screen.findByText("Song Details");
+		expect(screen.getByLabelText("Name:")).toHaveTextContent(
+			"Stairway to heaven"
+		);
+		expect(screen.getByLabelText("Length:")).toHaveTextContent("32.32");
+		expect(screen.getByLabelText("ID:")).toHaveTextContent(
+			"tu_23oin230fb32irji3"
+		);
 
-		// expect(screen.getByLabelText("Name:")).toHaveTextContent(
-		// 	"Take it easy."
-		// );
-		// expect(screen.getByLabelText("Length:")).toHaveTextContent("2.32");
-		// expect(screen.getByLabelText("ID:")).toHaveTextContent(
-		// 	"tu_asdfk23f0ij23f3"
-		// );
-
-		screen.debug();
+		// screen.debug();
 	});
 });
