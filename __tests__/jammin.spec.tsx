@@ -11,9 +11,9 @@ afterEach(() => mswServer.resetHandlers());
 afterAll(() => mswServer.close());
 
 describe("Matt", () => {
-	it("should render <Jammin /> without failing", async () => {
+	it("should render a thing", async () => {
 		render(<Jammin />);
-		await screen.findByText("All the Tunes");
+		await screen.findByText("All the tunes are");
 		expect(screen.getByText("Eyes to the wind: 1")).toBeInTheDocument();
 		screen.debug();
 	});

@@ -1,61 +1,27 @@
 import { useCallback, useEffect, useState } from "react";
 
-const useFetchTunes = () => {
-	const [data, setData] = useState(null);
-
-	const trigger = useCallback(() => {
-		const fetchData = async () => {
-			const response = await fetch(`/api/tunes`);
-			const responseData = await response.json();
-			setData(responseData);
-		};
-
-		fetchData();
-	}, []);
-
-	return { data, trigger };
-};
-
-const useFetchTune = () => {
-	const [data, setData] = useState(null);
-
-	const trigger = useCallback((id) => {
-		const fetchData = async () => {
-			const response = await fetch(`/api/tunes/${id}`);
-			const responseData = await response.json();
-			setData(responseData);
-		};
-
-		fetchData();
-	}, []);
-
-	return { data, trigger };
-};
-
 export default function Matt() {
-	const [singleTune, setSingleTune] = useState();
-	const { data: tunes, trigger: triggerGetTunes } = useFetchTunes();
-	// const { data: tune, trigger: triggerGetTune } = useFetchTune();
+	const [tunes, setTunes] = useState();
 
 	useEffect(() => {
-		triggerGetTunes();
-	}, [triggerGetTunes]);
+		const fetchData = async () => {
+			const response = await fetch(`/api/tunes`);
+			const data = await response.json();
+			setTunes(data);
+		};
+
+		fetchData();
+	}, []);
 
 	return (
 		<div>
-			<h1>All the Tunes</h1>
+			<h1>Get Tunes</h1>
 			{tunes ? (
 				<div>
-					{tunes.map((item, index) => (
+					<h1>All the tunes are</h1>
+					{tunes.map((item) => (
 						<p key={item.title}>
-							{`${item.title}: ${item.length}`} -{" "}
-							{/* <button
-								onClick={() => {
-									triggerGetTune(index);
-								}}
-							>
-								Get Info
-							</button> */}
+							{`${item.title}: ${item.length}`}
 						</p>
 					))}
 				</div>
