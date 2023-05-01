@@ -1,12 +1,9 @@
 import { fireEvent, render, screen } from "@testing-library/react";
-import { rest } from "msw";
 import { useRouter } from "next/router";
 import Jammin from "../pages/jammin";
 import "@testing-library/jest-dom";
 import "whatwg-fetch";
 import { mswServer } from "../src/mocks/server";
-
-import { tunes } from "../src/mocks/handlers";
 
 beforeAll(() => mswServer.listen());
 afterEach(() => mswServer.resetHandlers());
@@ -68,7 +65,5 @@ describe("Matt", () => {
 		expect(screen.getByLabelText("ID:")).toHaveTextContent(
 			"tu_23oin230fb32irji3"
 		);
-
-		// screen.debug();
 	});
 });
